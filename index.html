@@ -164,6 +164,11 @@
     font-size:15px;margin-bottom:10px;
   }
   .section-head h2{font-size:clamp(32px,5vw,48px);}
+  .section-fr{
+    display:block;margin-top:8px;font-family:'Fraunces',serif;font-style:italic;
+    font-weight:400;font-size:16px;color:var(--ink-soft);
+  }
+  .dc-fr{display:block;font-style:italic;font-size:13px;color:var(--ink-soft);margin-top:2px;}
   .section-rule{
     width:64px;height:1px;background:var(--rust);margin:22px auto 0;
   }
@@ -171,53 +176,101 @@
   .band{padding:120px 0;}
   .band.tint{background:var(--paper);}
 
-  /* ---------- story ---------- */
-  .story-intro{max-width:600px;margin:0 auto 90px;text-align:center;font-style:italic;color:var(--ink-soft);font-size:18px;}
-  .chapter{
-    display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;
-    margin-bottom:96px;
+  /* ---------- story (horizontal book) ---------- */
+  .story-intro{max-width:600px;margin:0 auto 60px;text-align:center;font-style:italic;color:var(--ink-soft);font-size:18px;}
+
+  .story-scroll{position:relative;}
+  .story-track{
+    display:flex;align-items:stretch;gap:26px;
+    overflow-x:auto;overflow-y:hidden;
+    scroll-snap-type:x proximity;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    padding:6px 8vw 46px;
   }
-  .chapter.rev .cx-media{order:2;}
-  .chapter.rev .cx-text{order:1;}
-  .cx-numeral{
-    font-family:'Fraunces',serif;font-weight:300;font-size:120px;line-height:1;
-    color:var(--rose);opacity:.55;position:absolute;top:-38px;left:-6px;z-index:0;
-    pointer-events:none;
-  }
-  .cx-text{position:relative;z-index:1;padding-top:10px;}
-  .cx-roman{
-    display:inline-block;font-family:'Fraunces',serif;font-style:italic;
-    font-size:14px;color:var(--rust-deep);letter-spacing:.06em;margin-bottom:10px;
-  }
-  .cx-title{font-size:clamp(24px,3.4vw,32px);margin-bottom:16px;}
-  .cx-text p{margin:0;color:var(--ink);font-size:17px;}
-  .cx-media{
-    aspect-ratio:4/5;border-radius:2px;
-    background:linear-gradient(160deg,#efe6db,#e6dccd);
+  .story-track::-webkit-scrollbar{display:none;}
+
+  .story-page{
+    flex:0 0 auto;scroll-snap-align:center;
+    width:min(880px,84vw);
+    display:grid;grid-template-columns:1fr 1px 1fr;
+    background:var(--ivory);
     border:1px solid var(--hair);
-    display:flex;align-items:center;justify-content:center;
-    position:relative;overflow:hidden;
+    border-radius:2px;
     box-shadow:var(--shadow);
+    overflow:hidden;
+    min-height:520px;
   }
-  .cx-media .frame-corner{position:absolute;width:22px;height:22px;border-color:var(--rust-deep);opacity:.5;}
-  .cx-media .fc-tl{top:14px;left:14px;border-top:1px solid;border-left:1px solid;}
-  .cx-media .fc-br{bottom:14px;right:14px;border-bottom:1px solid;border-right:1px solid;}
-  .cx-media .ph-icon{width:46px;height:46px;opacity:.45;}
-  .cx-media .ph-label{
-    position:absolute;bottom:24px;font-size:11px;letter-spacing:.1em;
+  .story-spine{background:linear-gradient(to bottom, transparent, var(--hair) 15%, var(--hair) 85%, transparent);}
+  .sp-media{
+    background:linear-gradient(160deg,#efe6db,#e6dccd);
+    display:flex;align-items:center;justify-content:center;
+    position:relative;overflow:hidden;padding:28px;
+  }
+  .sp-media .frame-corner{position:absolute;width:22px;height:22px;border-color:var(--rust-deep);opacity:.5;}
+  .sp-media .fc-tl{top:18px;left:18px;border-top:1px solid;border-left:1px solid;}
+  .sp-media .fc-br{bottom:18px;right:18px;border-bottom:1px solid;border-right:1px solid;}
+  .sp-media .ph-icon{width:46px;height:46px;opacity:.45;}
+  .sp-media .ph-label{
+    position:absolute;bottom:26px;font-size:11px;letter-spacing:.1em;
     color:var(--ink-soft);text-align:center;width:100%;
   }
-  .interlude{
-    max-width:520px;margin:0 auto 96px;text-align:center;
+  .sp-text{padding:52px 46px;display:flex;flex-direction:column;justify-content:center;}
+  .sp-roman{
+    display:inline-block;font-family:'Fraunces',serif;font-style:italic;
+    font-size:14px;color:var(--rust-deep);letter-spacing:.06em;margin-bottom:12px;
+  }
+  .sp-title{font-size:clamp(22px,3vw,30px);margin-bottom:16px;}
+  .sp-fr{display:block;font-size:14px;font-style:italic;color:var(--ink-soft);margin-top:2px;font-weight:400;}
+  .sp-text p{margin:0;color:var(--ink);font-size:16.5px;}
+  .sp-page-no{margin-top:26px;font-size:11px;letter-spacing:.08em;color:var(--ink-soft);}
+
+  .story-page.is-interlude{
+    grid-template-columns:1fr;
+    width:min(440px,72vw);
+    align-items:center;justify-content:center;
+    text-align:center;
+    background:var(--paper);
+    box-shadow:none;
+    border-style:dashed;
+  }
+  .story-page.is-interlude .sp-text{padding:40px 40px;}
+  .story-page.is-interlude p{
     font-family:'Fraunces',serif;font-style:italic;font-size:20px;
-    color:var(--sage-deep);line-height:1.6;
+    color:var(--sage-deep);line-height:1.6;margin:0;
+  }
+
+  .story-nav{
+    display:flex;align-items:center;justify-content:center;gap:22px;
+    margin-top:6px;
+  }
+  .story-arrow{
+    width:44px;height:44px;border-radius:50%;border:1px solid var(--hair);
+    background:var(--ivory);cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    transition:background .25s, transform .2s;
+    flex:none;
+  }
+  .story-arrow:hover{background:var(--paper);}
+  .story-arrow:active{transform:scale(.94);}
+  .story-arrow svg{width:16px;height:16px;stroke:var(--rust-deep);}
+  .story-dots{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;max-width:340px;}
+  .story-dot{
+    width:7px;height:7px;border-radius:50%;background:var(--hair);border:none;padding:0;cursor:pointer;
+    transition:background .3s, transform .3s;
+  }
+  .story-dot.active{background:var(--rust-deep);transform:scale(1.3);}
+  .story-hint{
+    text-align:center;font-size:12px;color:var(--ink-soft);letter-spacing:.04em;
+    margin-top:16px;font-style:italic;
   }
 
   @media (max-width:860px){
-    .chapter{grid-template-columns:1fr;gap:28px;}
-    .chapter.rev .cx-media{order:1;}
-    .chapter.rev .cx-text{order:2;}
-    .cx-numeral{font-size:80px;top:-24px;}
+    .story-page{grid-template-columns:1fr;min-height:auto;}
+    .story-spine{display:none;}
+    .sp-media{aspect-ratio:4/3;padding:20px;}
+    .sp-text{padding:34px 30px;}
+    .story-page.is-interlude{width:min(340px,78vw);}
   }
 
   /* ---------- details ---------- */
@@ -316,6 +369,7 @@
     color:#fff;
   }
   .rsvp-band .section-kicker{color:rgba(255,255,255,.85);}
+  .rsvp-band .section-fr{color:rgba(255,255,255,.8);}
   .rsvp-band h2{color:#fff;}
   .rsvp-band p{color:rgba(255,255,255,.9);max-width:480px;margin:20px auto 36px;}
   .btn-rsvp{
@@ -388,7 +442,7 @@
     <path d="M58 90 C 40 82, 30 66, 30 48" stroke="#AE6965" stroke-width="1.2"/>
   </svg>
 
-  <div class="kicker">Together with their families</div>
+  <div class="kicker">Together with their families<span style="display:block;font-size:14px;color:var(--ink-soft);font-style:italic;margin-top:4px;">Avec leurs familles</span></div>
   <h1>Enzo<span class="amp">&amp;</span>Sharmaine</h1>
   <div class="hero-date">Monday, the eleventh of January &nbsp;·&nbsp; Two thousand twenty-seven &nbsp;·&nbsp; 4:00 in the afternoon</div>
   <div class="hero-place">Diliman, Quezon City — Philippines</div>
@@ -411,169 +465,209 @@
   <div class="wrap">
     <div class="section-head reveal">
       <div class="section-kicker">Chapter by chapter</div>
-      <h2>Our Story</h2>
-      <p class="story-intro" style="margin-top:22px;">Two lives, separated by thousands of miles, each following their own path — until, quietly, they didn't.</p>
+      <h2>Our Story<span class="section-fr">Notre Histoire</span></h2>
+      <p class="story-intro" style="margin-top:22px;">Two lives, separated by thousands of miles, each following their own path — until, quietly, they didn't. Scroll sideways to turn the page.</p>
       <div class="section-rule"></div>
     </div>
+  </div>
 
-    <!-- Chapter I -->
-    <div class="chapter reveal">
-      <div class="cx-media">
-        <div class="frame-corner fc-tl"></div><div class="frame-corner fc-br"></div>
-        <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="#8f4f4c" stroke-width="1.2"><rect x="3" y="5" width="18" height="14" rx="1"/><circle cx="8.5" cy="10" r="1.6"/><path d="M21 16l-5.5-5-4 4-2.5-2L3 18"/></svg>
-        <div class="ph-label">Photo — Add your favorite here</div>
+  <div class="story-scroll">
+    <div class="story-track" id="storyTrack">
+
+      <!-- Chapter I -->
+      <div class="story-page" data-page="0">
+        <div class="sp-media">
+          <div class="frame-corner fc-tl"></div><div class="frame-corner fc-br"></div>
+          <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="#8f4f4c" stroke-width="1.2"><rect x="3" y="5" width="18" height="14" rx="1"/><circle cx="8.5" cy="10" r="1.6"/><path d="M21 16l-5.5-5-4 4-2.5-2L3 18"/></svg>
+          <div class="ph-label">Photo — Add your favorite here</div>
+        </div>
+        <div class="story-spine"></div>
+        <div class="sp-text">
+          <span class="sp-roman">Chapter I</span>
+          <h3 class="sp-title">Two Cities</h3>
+          <p>Two lives, separated by thousands of miles, each following their own path.</p>
+          <span class="sp-page-no">1 / 10</span>
+        </div>
       </div>
-      <div class="cx-text">
-        <span class="cx-numeral">I</span>
-        <span class="cx-roman">Chapter I</span>
-        <h3 class="cx-title">Two Cities</h3>
-        <p>Two lives, separated by thousands of miles, each following their own path.</p>
+
+      <!-- Chapter II -->
+      <div class="story-page" data-page="1">
+        <div class="sp-media">
+          <div class="frame-corner fc-tl"></div><div class="frame-corner fc-br"></div>
+          <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="#8f4f4c" stroke-width="1.2"><path d="M2 16l6-6 4 4 9-9"/><path d="M15 5h6v6"/></svg>
+          <div class="ph-label">Photo — Add your favorite here</div>
+        </div>
+        <div class="story-spine"></div>
+        <div class="sp-text">
+          <span class="sp-roman">Chapter II</span>
+          <h3 class="sp-title">The Wanderer</h3>
+          <p>Enzo had always dreamed of travelling — of discovering the world, seeing new places, and finally turning those dreams into reality.</p>
+          <span class="sp-page-no">2 / 10</span>
+        </div>
       </div>
+
+      <!-- Chapter III -->
+      <div class="story-page" data-page="2">
+        <div class="sp-media">
+          <div class="frame-corner fc-tl"></div><div class="frame-corner fc-br"></div>
+          <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="#8f4f4c" stroke-width="1.2"><path d="M12 21s-7-4.35-9.5-8.3C1 9.5 2.5 6 6 6c2 0 3.5 1.2 4 2.5C10.5 7.2 12 6 14 6c3.5 0 5 3.5 3.5 6.7C15 16.65 12 21 12 21z"/></svg>
+          <div class="ph-label">Photo — Add your favorite here</div>
+        </div>
+        <div class="story-spine"></div>
+        <div class="sp-text">
+          <span class="sp-roman">Chapter III</span>
+          <h3 class="sp-title">Her Own Story</h3>
+          <p>Meanwhile, Sharmaine was raising her three children and living her own life.</p>
+          <span class="sp-page-no">3 / 10</span>
+        </div>
+      </div>
+
+      <!-- Chapter IV -->
+      <div class="story-page" data-page="3">
+        <div class="sp-media">
+          <div class="frame-corner fc-tl"></div><div class="frame-corner fc-br"></div>
+          <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="#8f4f4c" stroke-width="1.2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+          <div class="ph-label">Photo — Add your favorite here</div>
+        </div>
+        <div class="story-spine"></div>
+        <div class="sp-text">
+          <span class="sp-roman">Chapter IV</span>
+          <h3 class="sp-title">A Quiet Hope</h3>
+          <p>She had always dreamed of a romance of her own — something genuine, a story worth living and sharing. But after the relationships she had been through, she had slowly stopped believing that a love like that would ever find its way to her.</p>
+          <span class="sp-page-no">4 / 10</span>
+        </div>
+      </div>
+
+      <!-- Interlude -->
+      <div class="story-page is-interlude" data-page="i1">
+        <div class="sp-text"><p>And somehow, their paths began to draw closer.</p></div>
+      </div>
+
+      <!-- Chapter V -->
+      <div class="story-page" data-page="4">
+        <div class="sp-media">
+          <div class="frame-corner fc-tl"></div><div class="frame-corner fc-br"></div>
+          <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="#8f4f4c" stroke-width="1.2"><path d="M3 12h18M12 3c2.5 3 2.5 15 0 18M12 3c-2.5 3-2.5 15 0 18"/></svg>
+          <div class="ph-label">Photo — Add your favorite here</div>
+        </div>
+        <div class="story-spine"></div>
+        <div class="sp-text">
+          <span class="sp-roman">Chapter V</span>
+          <h3 class="sp-title">The Map of Maybe</h3>
+          <p>Enzo was looking at different destinations across Asia. He had always wanted to travel, and this time, he was simply comparing the possibilities before him.</p>
+          <span class="sp-page-no">5 / 10</span>
+        </div>
+      </div>
+
+      <!-- Chapter VI -->
+      <div class="story-page" data-page="5">
+        <div class="sp-media">
+          <div class="frame-corner fc-tl"></div><div class="frame-corner fc-br"></div>
+          <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="#8f4f4c" stroke-width="1.2"><path d="M2 12l19-7-7 19-3-8-9-4z"/></svg>
+          <div class="ph-label">Photo — Add your favorite here</div>
+        </div>
+        <div class="story-spine"></div>
+        <div class="sp-text">
+          <span class="sp-roman">Chapter VI</span>
+          <h3 class="sp-title">A Ticket to Somewhere</h3>
+          <p>Flight prices varied from one destination to another. This time, the Philippines simply happened to be the most appealing opportunity.</p>
+          <span class="sp-page-no">6 / 10</span>
+        </div>
+      </div>
+
+      <!-- Interlude -->
+      <div class="story-page is-interlude" data-page="i2">
+        <div class="sp-text"><p>So he chose the Philippines.</p></div>
+      </div>
+
+      <!-- Chapter VII -->
+      <div class="story-page" data-page="6">
+        <div class="sp-media">
+          <div class="frame-corner fc-tl"></div><div class="frame-corner fc-br"></div>
+          <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="#8f4f4c" stroke-width="1.2"><path d="M12 2v6M12 16v6M2 12h6M16 12h6"/><circle cx="12" cy="12" r="2.2"/></svg>
+          <div class="ph-label">Photo — Add your favorite here</div>
+        </div>
+        <div class="story-spine"></div>
+        <div class="sp-text">
+          <span class="sp-roman">Chapter VII</span>
+          <h3 class="sp-title">The Smallest Decision</h3>
+          <p>A simple decision. Almost insignificant. And sometimes, it is precisely the decisions that seem the smallest that end up changing an entire life.</p>
+          <span class="sp-page-no">7 / 10</span>
+        </div>
+      </div>
+
+      <!-- Interlude -->
+      <div class="story-page is-interlude" data-page="i3">
+        <div class="sp-text"><p>Then came April 11, 2023. On a beach in Palawan, Enzo got down on one knee in front of Sharmaine. But he wasn't proposing — he was making a promise.</p></div>
+      </div>
+
+      <!-- Chapter VIII -->
+      <div class="story-page" data-page="7">
+        <div class="sp-media">
+          <div class="frame-corner fc-tl"></div><div class="frame-corner fc-br"></div>
+          <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="#8f4f4c" stroke-width="1.2"><path d="M12 21c-5-3.5-9-7-9-11.5A5 5 0 0112 6a5 5 0 019 3.5C21 14 17 17.5 12 21z"/></svg>
+          <div class="ph-label">Photo — Add your favorite here</div>
+        </div>
+        <div class="story-spine"></div>
+        <div class="sp-text">
+          <span class="sp-roman">Chapter VIII</span>
+          <h3 class="sp-title">A Promise on the Sand</h3>
+          <p>The next time he would kneel before her, it would be to ask her to become his wife. Nearly 1,000 days later, that promise would finally be kept.</p>
+          <span class="sp-page-no">8 / 10</span>
+        </div>
+      </div>
+
+      <!-- Interlude -->
+      <div class="story-page is-interlude" data-page="i4">
+        <div class="sp-text"><p>Surrounded by his family and Sharmaine's, Enzo got down on one knee once again.</p></div>
+      </div>
+
+      <!-- Chapter IX -->
+      <div class="story-page" data-page="8">
+        <div class="sp-media">
+          <div class="frame-corner fc-tl"></div><div class="frame-corner fc-br"></div>
+          <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="#8f4f4c" stroke-width="1.2"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.4"/></svg>
+          <div class="ph-label">Photo — Add your favorite here</div>
+        </div>
+        <div class="story-spine"></div>
+        <div class="sp-text">
+          <span class="sp-roman">Chapter IX</span>
+          <h3 class="sp-title">The Question</h3>
+          <p>This time, there was no promise for another day. There was only one question. Overwhelmed by emotion, Sharmaine could no longer hold back what she was feeling — tears filled her eyes, and for a moment, words simply failed her. So she answered in the only way she could. She nodded. And a big <em>yes</em>, she said. No words were spoken. But none were needed.</p>
+          <span class="sp-page-no">9 / 10</span>
+        </div>
+      </div>
+
+      <!-- Chapter X -->
+      <div class="story-page" data-page="9">
+        <div class="sp-media">
+          <div class="frame-corner fc-tl"></div><div class="frame-corner fc-br"></div>
+          <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="#8f4f4c" stroke-width="1.2"><path d="M12 21c-5-3.5-9-7-9-11.5A5 5 0 0112 6a5 5 0 019 3.5C21 14 17 17.5 12 21z"/></svg>
+          <div class="ph-label">Photo — Add your favorite here</div>
+        </div>
+        <div class="story-spine"></div>
+        <div class="sp-text">
+          <span class="sp-roman">Chapter X</span>
+          <h3 class="sp-title">Hers</h3>
+          <p>After everything she had come to believe about love, Sharmaine had finally found the love she had always dreamed of — and this time, it was hers.</p>
+          <span class="sp-page-no">10 / 10</span>
+        </div>
+      </div>
+
     </div>
 
-    <!-- Chapter II -->
-    <div class="chapter rev reveal">
-      <div class="cx-media">
-        <div class="frame-corner fc-tl"></div><div class="frame-corner fc-br"></div>
-        <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="#8f4f4c" stroke-width="1.2"><path d="M2 16l6-6 4 4 9-9"/><path d="M15 5h6v6"/></svg>
-        <div class="ph-label">Photo — Add your favorite here</div>
+    <div class="wrap">
+      <div class="story-nav reveal">
+        <button class="story-arrow" id="storyPrev" aria-label="Previous page">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <div class="story-dots" id="storyDots"></div>
+        <button class="story-arrow" id="storyNext" aria-label="Next page">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
       </div>
-      <div class="cx-text">
-        <span class="cx-numeral">II</span>
-        <span class="cx-roman">Chapter II</span>
-        <h3 class="cx-title">The Wanderer</h3>
-        <p>Enzo had always dreamed of travelling — of discovering the world, seeing new places, and finally turning those dreams into reality.</p>
-      </div>
+      <p class="story-hint">Swipe, scroll, or use the arrows to turn the page</p>
     </div>
-
-    <!-- Chapter III -->
-    <div class="chapter reveal">
-      <div class="cx-media">
-        <div class="frame-corner fc-tl"></div><div class="frame-corner fc-br"></div>
-        <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="#8f4f4c" stroke-width="1.2"><path d="M12 21s-7-4.35-9.5-8.3C1 9.5 2.5 6 6 6c2 0 3.5 1.2 4 2.5C10.5 7.2 12 6 14 6c3.5 0 5 3.5 3.5 6.7C15 16.65 12 21 12 21z"/></svg>
-        <div class="ph-label">Photo — Add your favorite here</div>
-      </div>
-      <div class="cx-text">
-        <span class="cx-numeral">III</span>
-        <span class="cx-roman">Chapter III</span>
-        <h3 class="cx-title">Her Own Story</h3>
-        <p>Meanwhile, Sharmaine was raising her three children and living her own life.</p>
-      </div>
-    </div>
-
-    <!-- Chapter IV -->
-    <div class="chapter rev reveal">
-      <div class="cx-media">
-        <div class="frame-corner fc-tl"></div><div class="frame-corner fc-br"></div>
-        <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="#8f4f4c" stroke-width="1.2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
-        <div class="ph-label">Photo — Add your favorite here</div>
-      </div>
-      <div class="cx-text">
-        <span class="cx-numeral">IV</span>
-        <span class="cx-roman">Chapter IV</span>
-        <h3 class="cx-title">A Quiet Hope</h3>
-        <p>She had always dreamed of a romance of her own — something genuine, a story worth living and sharing. But after the relationships she had been through, she had slowly stopped believing that a love like that would ever find its way to her.</p>
-      </div>
-    </div>
-
-    <p class="interlude reveal">And somehow, their paths began to draw closer.</p>
-
-    <!-- Chapter V -->
-    <div class="chapter reveal">
-      <div class="cx-media">
-        <div class="frame-corner fc-tl"></div><div class="frame-corner fc-br"></div>
-        <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="#8f4f4c" stroke-width="1.2"><path d="M3 12h18M12 3c2.5 3 2.5 15 0 18M12 3c-2.5 3-2.5 15 0 18"/></svg>
-        <div class="ph-label">Photo — Add your favorite here</div>
-      </div>
-      <div class="cx-text">
-        <span class="cx-numeral">V</span>
-        <span class="cx-roman">Chapter V</span>
-        <h3 class="cx-title">The Map of Maybe</h3>
-        <p>Enzo was looking at different destinations across Asia. He had always wanted to travel, and this time, he was simply comparing the possibilities before him.</p>
-      </div>
-    </div>
-
-    <!-- Chapter VI -->
-    <div class="chapter rev reveal">
-      <div class="cx-media">
-        <div class="frame-corner fc-tl"></div><div class="frame-corner fc-br"></div>
-        <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="#8f4f4c" stroke-width="1.2"><path d="M2 12l19-7-7 19-3-8-9-4z"/></svg>
-        <div class="ph-label">Photo — Add your favorite here</div>
-      </div>
-      <div class="cx-text">
-        <span class="cx-numeral">VI</span>
-        <span class="cx-roman">Chapter VI</span>
-        <h3 class="cx-title">A Ticket to Somewhere</h3>
-        <p>Flight prices varied from one destination to another. This time, the Philippines simply happened to be the most appealing opportunity.</p>
-      </div>
-    </div>
-
-    <p class="interlude reveal">So he chose the Philippines.</p>
-
-    <!-- Chapter VII -->
-    <div class="chapter reveal">
-      <div class="cx-media">
-        <div class="frame-corner fc-tl"></div><div class="frame-corner fc-br"></div>
-        <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="#8f4f4c" stroke-width="1.2"><path d="M12 2v6M12 16v6M2 12h6M16 12h6"/><circle cx="12" cy="12" r="2.2"/></svg>
-        <div class="ph-label">Photo — Add your favorite here</div>
-      </div>
-      <div class="cx-text">
-        <span class="cx-numeral">VII</span>
-        <span class="cx-roman">Chapter VII</span>
-        <h3 class="cx-title">The Smallest Decision</h3>
-        <p>A simple decision. Almost insignificant. And sometimes, it is precisely the decisions that seem the smallest that end up changing an entire life.</p>
-      </div>
-    </div>
-
-    <p class="interlude reveal">Then came April 11, 2023. On a beach in Palawan, Enzo got down on one knee in front of Sharmaine. But he wasn't proposing — he was making a promise.</p>
-
-    <!-- Chapter VIII -->
-    <div class="chapter rev reveal">
-      <div class="cx-media">
-        <div class="frame-corner fc-tl"></div><div class="frame-corner fc-br"></div>
-        <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="#8f4f4c" stroke-width="1.2"><path d="M12 21c-5-3.5-9-7-9-11.5A5 5 0 0112 6a5 5 0 019 3.5C21 14 17 17.5 12 21z"/></svg>
-        <div class="ph-label">Photo — Add your favorite here</div>
-      </div>
-      <div class="cx-text">
-        <span class="cx-numeral">VIII</span>
-        <span class="cx-roman">Chapter VIII</span>
-        <h3 class="cx-title">A Promise on the Sand</h3>
-        <p>The next time he would kneel before her, it would be to ask her to become his wife. Nearly 1,000 days later, that promise would finally be kept.</p>
-      </div>
-    </div>
-
-    <p class="interlude reveal">Surrounded by his family and Sharmaine's, Enzo got down on one knee once again.</p>
-
-    <!-- Chapter IX -->
-    <div class="chapter reveal">
-      <div class="cx-media">
-        <div class="frame-corner fc-tl"></div><div class="frame-corner fc-br"></div>
-        <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="#8f4f4c" stroke-width="1.2"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.4"/></svg>
-        <div class="ph-label">Photo — Add your favorite here</div>
-      </div>
-      <div class="cx-text">
-        <span class="cx-numeral">IX</span>
-        <span class="cx-roman">Chapter IX</span>
-        <h3 class="cx-title">The Question</h3>
-        <p>This time, there was no promise for another day. There was only one question. Overwhelmed by emotion, Sharmaine could no longer hold back what she was feeling — tears filled her eyes, and for a moment, words simply failed her. So she answered in the only way she could. She nodded. And a big <em>yes</em>, she said. No words were spoken. But none were needed.</p>
-      </div>
-    </div>
-
-    <!-- Chapter X -->
-    <div class="chapter rev reveal">
-      <div class="cx-media">
-        <div class="frame-corner fc-tl"></div><div class="frame-corner fc-br"></div>
-        <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="#8f4f4c" stroke-width="1.2"><path d="M12 21c-5-3.5-9-7-9-11.5A5 5 0 0112 6a5 5 0 019 3.5C21 14 17 17.5 12 21z"/><path d="M4 4l16 16" stroke-opacity="0"/></svg>
-        <div class="ph-label">Photo — Add your favorite here</div>
-      </div>
-      <div class="cx-text">
-        <span class="cx-numeral">X</span>
-        <span class="cx-roman">Chapter X</span>
-        <h3 class="cx-title">Hers</h3>
-        <p>After everything she had come to believe about love, Sharmaine had finally found the love she had always dreamed of — and this time, it was hers.</p>
-      </div>
-    </div>
-
   </div>
 </section>
 
@@ -582,21 +676,21 @@
   <div class="wrap">
     <div class="section-head reveal">
       <div class="section-kicker">Where to find us</div>
-      <h2>The Details</h2>
+      <h2>The Details<span class="section-fr">Les Détails</span></h2>
       <div class="section-rule"></div>
     </div>
 
     <div class="detail-cards reveal">
       <div class="detail-card">
         <div class="dc-tag">4:00 in the afternoon</div>
-        <h3>Ceremony</h3>
+        <h3>Ceremony<span class="dc-fr">Cérémonie</span></h3>
         <p>Holy Eucharist &amp; Exchange of Vows</p>
         <p>1008 Quezon Ave, Paligsahan,<br>Diliman, Quezon City, 1003<br>Metro Manila, Philippines</p>
         <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=1008+Quezon+Ave%2C+Paligsahan%2C+Diliman%2C+Quezon+City%2C+1003+Metro+Manila%2C+Philippines" target="_blank" rel="noopener">View on map</a>
       </div>
       <div class="detail-card">
         <div class="dc-tag">6:00 in the evening</div>
-        <h3>Reception</h3>
+        <h3>Reception<span class="dc-fr">Réception</span></h3>
         <p>Cocktails, dinner &amp; dancing</p>
         <p>Celestia Hall</p>
         <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Celestia+Hall+Quezon+City+Philippines" target="_blank" rel="noopener">View on map</a>
@@ -653,7 +747,7 @@
   <div class="wrap">
     <div class="section-head reveal">
       <div class="section-kicker">With gratitude</div>
-      <h2>The Entourage</h2>
+      <h2>The Entourage<span class="section-fr">Le Cortège Nuptial</span></h2>
       <div class="section-rule"></div>
     </div>
 
@@ -730,7 +824,7 @@
   <div class="wrap">
     <div class="section-head reveal">
       <div class="section-kicker">Dress the part</div>
-      <h2>Attire Guide</h2>
+      <h2>Attire Guide<span class="section-fr">Guide de la Tenue</span></h2>
       <p style="margin-top:18px;color:var(--ink-soft);">Our wedding palette — please draw your outfit's colors from these three tones.</p>
       <div class="section-rule"></div>
     </div>
@@ -772,7 +866,7 @@
   <div class="wrap">
     <div class="section-head reveal">
       <div class="section-kicker">Should you wish</div>
-      <h2>Gift Guide</h2>
+      <h2>Gift Guide<span class="section-fr">Guide des Cadeaux</span></h2>
       <div class="section-rule"></div>
     </div>
 
@@ -791,7 +885,7 @@
   <div class="wrap">
     <div class="reveal">
       <div class="section-kicker">Kindly respond</div>
-      <h2>We can't wait to celebrate with you</h2>
+      <h2>We can't wait to celebrate with you<span class="section-fr">Répondez s'il vous plaît</span></h2>
       <p>Please let us know if you'll be joining us by December 11, 2026, so we can prepare a seat with your name on it.</p>
       <a class="btn-rsvp" href="#" id="rsvpLink">RSVP Now</a>
       <div class="hashtag">#AlwaysAndForever</div>
@@ -825,6 +919,61 @@
     entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold: 0.12 });
   revealEls.forEach(el => io.observe(el));
+
+  // story — horizontal book scroll
+  (function(){
+    const track = document.getElementById('storyTrack');
+    const pages = Array.from(track.querySelectorAll('.story-page'));
+    const dotsWrap = document.getElementById('storyDots');
+    const prevBtn = document.getElementById('storyPrev');
+    const nextBtn = document.getElementById('storyNext');
+
+    pages.forEach((p, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'story-dot';
+      dot.setAttribute('aria-label', 'Go to page ' + (i+1));
+      dot.addEventListener('click', () => p.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'}));
+      dotsWrap.appendChild(dot);
+    });
+    const dots = Array.from(dotsWrap.children);
+
+    let current = 0;
+    function setActive(i){
+      current = i;
+      dots.forEach((d,idx) => d.classList.toggle('active', idx===i));
+    }
+
+    const pageObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if(e.isIntersecting && e.intersectionRatio > 0.6){
+          setActive(pages.indexOf(e.target));
+        }
+      });
+    }, { root: track, threshold: [0.6] });
+    pages.forEach(p => pageObserver.observe(p));
+    setActive(0);
+
+    prevBtn.addEventListener('click', () => {
+      const i = Math.max(0, current - 1);
+      pages[i].scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+    });
+    nextBtn.addEventListener('click', () => {
+      const i = Math.min(pages.length - 1, current + 1);
+      pages[i].scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+    });
+
+    // translate vertical wheel input into horizontal scroll while hovering the book,
+    // and let the page scroll normally once the track has reached either end
+    track.addEventListener('wheel', (e) => {
+      const atStart = track.scrollLeft <= 2;
+      const atEnd = track.scrollLeft >= track.scrollWidth - track.clientWidth - 2;
+      const goingDown = e.deltaY > 0;
+      if((goingDown && !atEnd) || (!goingDown && !atStart)){
+        e.preventDefault();
+        track.scrollLeft += e.deltaY;
+      }
+    }, { passive:false });
+  })();
 
   // countdown — Jan 11, 2027, 4:00 PM Manila time (UTC+8)
   const target = new Date('2027-01-11T16:00:00+08:00').getTime();
