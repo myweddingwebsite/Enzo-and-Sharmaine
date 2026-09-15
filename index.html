@@ -903,7 +903,7 @@
       <div class="section-kicker">Kindly respond</div>
       <h2>We can't wait to celebrate with you<span class="section-fr">Répondez s'il vous plaît</span></h2>
       <p>Please let us know if you'll be joining us by December 11, 2026, so we can prepare a seat with your name on it.</p>
-      <a class="btn-rsvp" href="#" id="rsvpLink">RSVP Now</a>
+      <a class="btn-rsvp" href="https://script.google.com/macros/s/AKfycbwzcmZeYx7A5s1TaHonFkvjTcXnGi30N8LcjxCo20A9h5PSW7BmZ6DYMY3NjQSNGNrG/exec" target="_blank" rel="noopener" id="rsvpLink">RSVP Now</a>
       <div class="hashtag">#AlwaysAndForever</div>
     </div>
   </div>
@@ -1009,14 +1009,6 @@
   }
   tick();
   setInterval(tick, 1000);
-
-  // RSVP placeholder link — update href once a real RSVP form exists
-  document.getElementById('rsvpLink').addEventListener('click', function(e){
-    if(this.getAttribute('href') === '#'){
-      e.preventDefault();
-      alert('Add your RSVP form link (Google Form, Zola, etc.) to the RSVP button in the site code.');
-    }
-  });
 </script>
 
 </body>
